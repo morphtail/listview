@@ -52,6 +52,7 @@ public class FXMLDocumentController implements Initializable {
         listViewSevice.observableListViewItems.add(new ListViewItem("Item 2"));
         listViewSevice.observableListViewItems.add(new ListViewItem("Item 3"));
         
+        
         list.setItems(listViewSevice.observableListViewItems);
         
         
