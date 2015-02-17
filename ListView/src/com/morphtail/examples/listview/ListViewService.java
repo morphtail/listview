@@ -33,5 +33,5 @@ import javafx.collections.ObservableList;
  */
 
 public class ListViewService {
-      public ObservableList<ListViewItem> observableList = FXCollections.observableArrayList(myListItem -> new Observable[]{myListItem.name});
+      public ObservableList<ListViewItem> observableListViewItems = FXCollections.observableArrayList(myListItem -> new Observable[]{myListItem.name});
 }

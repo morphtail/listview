@@ -29,6 +29,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 
 /**
  *
@@ -40,14 +41,20 @@ public class FXMLDocumentController implements Initializable {
     private Label label;
     
     @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
-    }
+    private ListView list;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+       
+        ListViewService listViewSevice = new ListViewService();
+         
+        listViewSevice.observableListViewItems.add(new ListViewItem("Item 1"));
+        listViewSevice.observableListViewItems.add(new ListViewItem("Item 2"));
+        listViewSevice.observableListViewItems.add(new ListViewItem("Item 3"));
+        
+        list.setItems(listViewSevice.observableListViewItems);
+        
+        
     }    
     
 }

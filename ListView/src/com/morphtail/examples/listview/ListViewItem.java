@@ -41,10 +41,15 @@ public class ListViewItem {
         id = new SimpleStringProperty(UUID.randomUUID().toString());
         name = new SimpleStringProperty("");
     }
+    
+    public ListViewItem(String name){
+        this();
+        this.name.setValue(name);
+    }
 
     @Override
     public String toString() {
-        return "List View Item{" + "id=" + id + ", name=" + name + '}';
+        return name.getValue();
     }
    
     public String getName(){
