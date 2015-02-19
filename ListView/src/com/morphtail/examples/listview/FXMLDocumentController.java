@@ -25,11 +25,14 @@ package com.morphtail.examples.listview;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 
 /**
  *
@@ -37,25 +40,37 @@ import javafx.scene.control.ListView;
  */
 public class FXMLDocumentController implements Initializable {
     
-    @FXML
+   @FXML
     private Label label;
+
+    @FXML
+    private ListView listView;
+
+    @FXML
+    private TextField name;
+
+    @FXML
+    private TextField value;
+    
+    ListViewItem listItemEntity = new ListViewItem();
     
     @FXML
-    private ListView list;
-    
+    private void listViewMouseClick(MouseEvent event) {
+        System.out.println("You clicked me!");
+       // ObservableList item = listView.getSelectionModel().getSelectedItems();
+        //listItemEntity = (ListViewItem) item.get(0);
+        //label.setText("Hllo World!");
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
-        ListViewService listViewSevice = new ListViewService();
-         
-        listViewSevice.observableListViewItems.add(new ListViewItem("Item 1"));
-        listViewSevice.observableListViewItems.add(new ListViewItem("Item 2"));
-        listViewSevice.observableListViewItems.add(new ListViewItem("Item 3"));
-        
-        
-        list.setItems(listViewSevice.observableListViewItems);
-        
-        
+        ListViewService listService = ListViewService.getInstance();
+        listService.init();
+        listView.setItems(listService.observableListViewItems);
+
+        name.textProperty().bindBidirectional(listItemEntity.name);
+        value.textProperty().bindBidirectional(listItemEntity.value);
+
     }    
     
 }

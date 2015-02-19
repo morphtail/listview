@@ -36,13 +36,15 @@ public class ListViewItem {
 
     public StringProperty id;
     public StringProperty name;
+    public StringProperty value;
 
     public ListViewItem() {
         id = new SimpleStringProperty(UUID.randomUUID().toString());
         name = new SimpleStringProperty("");
+        value = new SimpleStringProperty("");
     }
-    
-    public ListViewItem(String name){
+
+    public ListViewItem(String name) {
         this();
         this.name.setValue(name);
     }
@@ -51,14 +53,15 @@ public class ListViewItem {
     public String toString() {
         return name.getValue();
     }
-   
-    public String getName(){
+
+    public String getName() {
         return name.getValue();
     }
- 
-    public String getId(){
+
+    public String getId() {
         return id.getValue();
     }
+
     @Override
     public int hashCode() {
         int hash = 5;

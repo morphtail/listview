@@ -35,19 +35,19 @@ import javafx.collections.ListChangeListener;
 public class ListViewListener implements ListChangeListener<ListViewItem> {
     @Override
     public void onChanged(Change c) {
-        Logger.getLogger(ListChangeListener.class.getName()).log(Level.INFO, null, "List change called.");
+        Logger.getLogger(ListChangeListener.class.getName()).log(Level.INFO, "List change called.");
         while (c.next()) {
             if (c.wasAdded()) {
                 List<ListViewItem> allAdded = c.getAddedSubList();
                 for (ListViewItem added : allAdded) {
-                    Logger.getLogger(ListChangeListener.class.getName()).log(Level.INFO, null, "Added item: " + added.toString());
+                    Logger.getLogger(ListChangeListener.class.getName()).log(Level.INFO,  "Added item: ", added.toString());
                 }
             }
             if (c.wasUpdated()) {
                 for (int i = c.getFrom(); i < c.getTo(); ++i) {
                     //permutate
                     ListViewItem item = (ListViewItem) c.getList().get(i);
-                    Logger.getLogger(ListChangeListener.class.getName()).log(Level.INFO, null, "Changed item: " + item.getName());
+                    Logger.getLogger(ListChangeListener.class.getName()).log(Level.INFO, "Changed item: " , item.getName());
                 }
             }
         }

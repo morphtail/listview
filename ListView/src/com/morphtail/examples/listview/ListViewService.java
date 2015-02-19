@@ -31,7 +31,25 @@ import javafx.collections.ObservableList;
  *
  * @author Silverleaf Technology Ltd
  */
-
 public class ListViewService {
-      public ObservableList<ListViewItem> observableListViewItems = FXCollections.observableArrayList(myListItem -> new Observable[]{myListItem.name});
+
+    private ListViewService() {
+    }
+
+    public static ListViewService getInstance() {
+        return ListServiceHolder.INSTANCE;
+    }
+
+    private static class ListServiceHolder {
+
+        private static final ListViewService INSTANCE = new ListViewService();
+    }
+
+    public void init() {
+        observableListViewItems.addListener(new ListViewListener());
+        this.observableListViewItems.add(new ListViewItem("Item1"));
+        this.observableListViewItems.add(new ListViewItem("Item2"));
+        this.observableListViewItems.add(new ListViewItem("Item3"));
+    }
+    public ObservableList<ListViewItem> observableListViewItems = FXCollections.observableArrayList(myListItem -> new Observable[]{myListItem.name});
 }
