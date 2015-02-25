@@ -58,8 +58,20 @@ public class ListViewItem {
         return name.getValue();
     }
 
+    public StringProperty nameProperty() {
+        return name;
+    }
+
     public String getId() {
         return id.getValue();
+    }
+
+    public String getValue() {
+        return value.getValue();
+    }
+
+    public StringProperty valueProperty() {
+        return value;
     }
 
     @Override

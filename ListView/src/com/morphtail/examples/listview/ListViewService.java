@@ -26,6 +26,7 @@ package com.morphtail.examples.listview;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 
 /**
  *
@@ -52,4 +53,20 @@ public class ListViewService {
         this.observableListViewItems.add(new ListViewItem("Item3"));
     }
     public ObservableList<ListViewItem> observableListViewItems = FXCollections.observableArrayList(myListItem -> new Observable[]{myListItem.name});
+    
+    public ListViewItem createNewEmptyItem(){
+          ListViewItem newListViewItem = new ListViewItem();
+        // Create a new name for new item
+        String newDefaultStem = "NewItem";
+        FilteredList<ListViewItem> filteredData = new FilteredList<>( observableListViewItems, item -> item.getName().contains(newDefaultStem));
+        if(filteredData.size() > 0){
+          newListViewItem.name.set(newDefaultStem + (filteredData.size()+1));
+        }
+        else {
+            newListViewItem.name.set(newDefaultStem);
+        }
+        observableListViewItems.add(newListViewItem);
+        return newListViewItem;
+        
+    }
 }
