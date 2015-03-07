@@ -33,6 +33,7 @@ import javafx.collections.ListChangeListener;
  * @author Silverleaf Technology Ltd
  */
 public class ListViewListener implements ListChangeListener<ListViewItem> {
+
     @Override
     public void onChanged(Change c) {
         Logger.getLogger(ListChangeListener.class.getName()).log(Level.INFO, "List change called.");
@@ -40,15 +41,26 @@ public class ListViewListener implements ListChangeListener<ListViewItem> {
             if (c.wasAdded()) {
                 List<ListViewItem> allAdded = c.getAddedSubList();
                 for (ListViewItem added : allAdded) {
-                    Logger.getLogger(ListChangeListener.class.getName()).log(Level.INFO,  "Added item: ", added.toString());
+                    Logger.getLogger(ListChangeListener.class.getName()).log(Level.INFO, "Added item: " + added.toString());
                 }
             }
             if (c.wasUpdated()) {
                 for (int i = c.getFrom(); i < c.getTo(); ++i) {
                     //permutate
                     ListViewItem item = (ListViewItem) c.getList().get(i);
-                    Logger.getLogger(ListChangeListener.class.getName()).log(Level.INFO, "Changed item: " , item.getName());
+                    Logger.getLogger(ListChangeListener.class.getName()).log(Level.INFO, "Changed item: " + item.getName());
                 }
+            }
+            if (c.wasPermutated()) {
+                Logger.getLogger(ListChangeListener.class.getName()).log(Level.INFO, "Permutated item");
+
+            }
+            if (c.wasRemoved()) {
+                List<ListViewItem> allRemoved = c.getRemoved();
+                for (ListViewItem added : allRemoved) {
+                    Logger.getLogger(ListChangeListener.class.getName()).log(Level.INFO, "Item Removed: " + added.toString());
+                }
+
             }
         }
     }

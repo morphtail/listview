@@ -48,11 +48,11 @@ public class ListViewService {
 
     public void init() {
         observableListViewItems.addListener(new ListViewListener());
-        this.observableListViewItems.add(new ListViewItem("Item1"));
-        this.observableListViewItems.add(new ListViewItem("Item2"));
-        this.observableListViewItems.add(new ListViewItem("Item3"));
+        this.observableListViewItems.add(new ListViewItem("Item1","Value1"));
+        this.observableListViewItems.add(new ListViewItem("Item2","Value2"));
+        this.observableListViewItems.add(new ListViewItem("Item3","Value3"));
     }
-    public ObservableList<ListViewItem> observableListViewItems = FXCollections.observableArrayList(myListItem -> new Observable[]{myListItem.name});
+    public ObservableList<ListViewItem> observableListViewItems = FXCollections.observableArrayList(myListItem -> new Observable[]{myListItem.name,myListItem.value});
     
     public ListViewItem createNewEmptyItem(){
           ListViewItem newListViewItem = new ListViewItem();

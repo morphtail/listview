@@ -34,15 +34,15 @@ import javafx.stage.Stage;
  * @author Silverleaf Technology Ltd
  */
 public class ListViewApp extends Application {
-    
+
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        
         Scene scene = new Scene(root);
-        
         stage.setScene(scene);
+        stage.setTitle("Morphtail - List View Example App");
         stage.show();
+
     }
 
     /**
@@ -51,5 +51,5 @@ public class ListViewApp extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }

@@ -49,6 +49,18 @@ public class ListViewItem {
         this.name.setValue(name);
     }
 
+    public ListViewItem(String name, String value) {
+        this();
+        this.name.setValue(name);
+        this.value.setValue(value);
+    }
+
+    public ListViewItem(ListViewItem anotherItem) {
+        this();
+        this.name.setValue(anotherItem.getName());
+        this.value.setValue(anotherItem.getValue());
+    }
+
     @Override
     public String toString() {
         return name.getValue();
@@ -74,11 +86,17 @@ public class ListViewItem {
         return value;
     }
 
+    public void updateValues(String n, String v) {
+        value.setValue(v);
+        name.setValue(n);
+    }
+
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 37 * hash + Objects.hashCode(this.id);
-        hash = 37 * hash + Objects.hashCode(this.name);
+        hash = 53 * hash + Objects.hashCode(this.id);
+        hash = 53 * hash + Objects.hashCode(this.name);
+        hash = 53 * hash + Objects.hashCode(this.value);
         return hash;
     }
 
@@ -97,6 +115,10 @@ public class ListViewItem {
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
+        if (!Objects.equals(this.value, other.value)) {
+            return false;
+        }
         return true;
     }
+
 }

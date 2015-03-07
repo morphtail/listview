@@ -28,9 +28,9 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -40,7 +40,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 
 /**
  *
@@ -53,6 +52,8 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private ListView listView;
     @FXML
+    private Label id;
+    @FXML
     private TextField name;
     @FXML
     private TextField value;
@@ -62,29 +63,47 @@ public class FXMLDocumentController implements Initializable {
     private Button create;
     @FXML
     private Button delete;
+    @FXML
+    private Button copy;
 
     Optional<ListViewItem> currentListItemEntity = Optional.ofNullable(null);
 
     @FXML
-    private void listViewMouseClick(MouseEvent event) {
+    private void listViewMouseClick(Event event) {
+        userSaveAnyChangesOption(event);
         ObservableList item = listView.getSelectionModel().getSelectedItems();
         currentListItemEntity = Optional.ofNullable((ListViewItem) item.get(0));
         updateFields();
 
     }
 
-    @FXML
-    private void createAction(ActionEvent event) {
-        Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.INFO, "Create Action Called.");
-        currentListItemEntity = Optional.ofNullable(listService.createNewEmptyItem());
-        updateFields();
-        
+    private void userSaveAnyChangesOption(Event event) {
+        if (!save.disableProperty().get()) {
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Save current changes");
+            alert.setContentText(" Item " + currentListItemEntity.get().toString() + " has been updated do you want to save changes?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                this.saveAction(event);
+            }
+        }
     }
 
     @FXML
-    private void saveAction(ActionEvent event) {
-        Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.INFO, "Save Action Called.");
+    private void createAction(ActionEvent event) {
+        Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.INFO, "Create Action Called.");
+        userSaveAnyChangesOption(event);
 
+        currentListItemEntity = Optional.ofNullable(listService.createNewEmptyItem());
+        updateFields();
+        listView.getSelectionModel().selectLast();
+    }
+
+    @FXML
+    private void saveAction(Event event) {
+        Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.INFO, "Save Action Called.");
+        this.currentListItemEntity.get().updateValues(name.getText(), value.getText());
+        save.setDisable(true);
     }
 
     @FXML
@@ -105,6 +124,17 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
+    private void copyAction(ActionEvent event) {
+        Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.INFO, "Copy Action Called.");
+        ListViewItem newItem = new ListViewItem(currentListItemEntity.get());
+        listService.observableListViewItems.add(newItem);
+        currentListItemEntity = Optional.ofNullable(newItem);
+
+        updateFields();
+        listView.getSelectionModel().selectLast();
+    }
+
+    @FXML
     private void valueAction(ActionEvent event) {
         System.out.println("valueAction");
 
@@ -120,11 +150,14 @@ public class FXMLDocumentController implements Initializable {
         if (currentListItemEntity.isPresent()) {
             value.setText(currentListItemEntity.get().getValue());
             name.setText(currentListItemEntity.get().getName());
+            id.setText(currentListItemEntity.get().getId());
 
         } else {
             value.setText("");
             name.setText("");
+            id.setText("");
         }
+
     }
 
     ListViewService listService;
@@ -139,15 +172,21 @@ public class FXMLDocumentController implements Initializable {
 
         // Handle TextField text changes.
         name.textProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("TextField Text Changed (newValue: " + newValue + ")");
+            if (currentListItemEntity.get().getName().equals(newValue)) {
+                save.setDisable(true);
+            } else {
+                save.setDisable(false);
+            }
         });
         // Handle TextField text changes.
         value.textProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("TextField Text Changed (newValue: " + newValue + ")");
+            if (currentListItemEntity.get().getValue().equals(newValue)) {
+                save.setDisable(true);
+            } else {
+                save.setDisable(false);
+            }
         });
-
-        //  name.textProperty().bindBidirectional(listItemEntity.nameProperty());
-        //  value.textProperty().bindBidirectional(listItemEntity.valueProperty());
+        save.setDisable(true);
     }
 
 }
