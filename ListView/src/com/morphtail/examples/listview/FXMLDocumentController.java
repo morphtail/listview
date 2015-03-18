@@ -129,7 +129,6 @@ public class FXMLDocumentController implements Initializable {
         ListViewItem newItem = new ListViewItem(currentListItemEntity.get());
         listService.observableListViewItems.add(newItem);
         currentListItemEntity = Optional.ofNullable(newItem);
-
         updateFields();
         listView.getSelectionModel().selectLast();
     }
@@ -137,13 +136,11 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void valueAction(ActionEvent event) {
         System.out.println("valueAction");
-
     }
 
     @FXML
     private void nameAction(ActionEvent event) {
         System.out.println("nameAction");
-
     }
 
     private void updateFields() {

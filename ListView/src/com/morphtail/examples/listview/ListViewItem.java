@@ -57,7 +57,7 @@ public class ListViewItem {
 
     public ListViewItem(ListViewItem anotherItem) {
         this();
-        this.name.setValue(anotherItem.getName());
+        this.name.setValue("Copy - " + anotherItem.getName());
         this.value.setValue(anotherItem.getValue());
     }
 
